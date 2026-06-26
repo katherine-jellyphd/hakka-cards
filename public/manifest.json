@@ -1,0 +1,10 @@
+{
+  "name": "僑界名片簿",
+  "short_name": "名片簿",
+  "description": "拍照辨識名片，智慧合併，群組寄信",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2a1f14",
+  "theme_color": "#2a1f14",
+  "orientation": "portrait"
+}
