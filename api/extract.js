@@ -8,13 +8,13 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server missing ANTHROPIC_API_KEY' });
   }
 
-  const { image, token } = req.body;
+  const { image } = req.body;
   if (!image) {
     return res.status(400).json({ error: 'Missing image data' });
   }
 
-  const appPassword = process.env.APP_PASSWORD || 'hakka2026';
-  if (token !== appPassword) {
+  const secret = req.headers['x-app-token'];
+  if (secret !== (process.env.API_SECRET || 'hakka-cards-2026')) {
     return res.status(401).json({ error: '未授權' });
   }
 
