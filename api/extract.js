@@ -43,7 +43,8 @@ export default async function handler(req, res) {
 2. For each card, extract contact info.
 3. If front and back are both visible, merge into ONE contact.
 4. If a card lists multiple people, create one entry per person.
-For each person return: name, chineseName, titles, org, phone, email, address, business, note (empty string if not found).
+5. If there are QR codes on the card, read the URL they encode.
+For each person return: name, chineseName, titles, org, phone, email, address, business, qrcode, note (empty string if not found). qrcode should contain any URLs from QR codes on that card, one per line.
 Return ONLY a valid JSON array. No markdown.`,
             },
           ],
