@@ -39,18 +39,23 @@ export default async function handler(req, res) {
             {
               type: 'text',
               text: `You are a business card scanner. This photo may contain ONE or MULTIPLE business cards.
-1. Identify each DISTINCT business card.
-2. For each card, extract contact info.
-3. If front and back are both visible, merge into ONE contact.
-4. If a card lists multiple people, create one entry per person.
-5. If there are QR codes on the card, read the URL they encode.
-6. For each card, estimate its bounding box in the FULL IMAGE as percentages (0-100): cardX (left edge), cardY (top edge), cardW (width), cardH (height). This is critical for cropping individual card thumbnails.
-7. If a person's headshot/portrait photo is visible on the card, also return faceX, faceY (face center as % of full image) and faceSize (face width as % of image width).
-8. Extract ALL phone numbers found on the card. If multiple, join with newline.
-9. Extract LINE ID if present — look for LINE logo, "LINE:" text, or LINE QR code URL (line.me/...). Put in the "line" field.
-10. For any additional contact info beyond the core fields (Facebook, Instagram, LinkedIn, Twitter/X, WeChat, website, fax, etc.), return them in an "extras" array of {label, value} objects. Do NOT put LINE in extras.
-For each person return: name, chineseName, titles, org, phone, email, line, address, business, qrcode, note, extras, cardX, cardY, cardW, cardH. Also include faceX, faceY, faceSize only if a portrait photo exists. Use empty string for text fields if not found. extras should be an array (empty array if none).
-Return ONLY a valid JSON array. No markdown.`,
+
+RULES:
+1. Identify each DISTINCT business card. If front and back are both visible, merge into ONE contact.
+2. If a card lists multiple people, create one entry per person.
+3. Extract ALL phone numbers. If multiple, join with "\\n".
+4. email field: ONLY real email addresses (contains @). Do NOT put LINE IDs, URLs, or social media handles in email.
+5. line field: LINE ID or LINE URL (line.me/...). Look for LINE logo or "LINE:" text.
+6. facebook field: Facebook URL or profile name. Check QR codes — if a QR code points to facebook.com or fb.com, put that URL here.
+7. instagram field: Instagram handle or URL. Check QR codes — if a QR code points to instagram.com, put that URL here.
+8. qrcode field: URLs from QR codes that are NOT Facebook, Instagram, or LINE. Leave empty if all QR codes are already categorized above.
+9. For each card, estimate its bounding box in the FULL IMAGE as percentages (0-100): cardX, cardY, cardW, cardH.
+10. If a headshot/portrait photo exists, also return faceX, faceY, faceSize.
+11. For any OTHER contact info (LinkedIn, Twitter/X, WeChat, website, fax, etc.), put in "extras" array as {label, value}. Do NOT duplicate info already in core fields.
+12. Do NOT repeat the same information in multiple fields. Each piece of info goes in exactly ONE field.
+
+Return JSON array. Each object: name, chineseName, titles, org, phone, email, line, facebook, instagram, address, business, qrcode, note, extras, cardX, cardY, cardW, cardH (+ faceX, faceY, faceSize if portrait exists). Empty string for missing text fields. extras is an array (empty [] if none).
+Return ONLY valid JSON. No markdown.`,
             },
           ],
         }],
