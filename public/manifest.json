@@ -4,7 +4,7 @@
   "description": "拍照辨識名片，智慧合併，群組寄信",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#2a1f14",
-  "theme_color": "#2a1f14",
+  "background_color": "#2E3D64",
+  "theme_color": "#2E3D64",
   "orientation": "portrait"
 }
