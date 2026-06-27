@@ -8,9 +8,14 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server missing ANTHROPIC_API_KEY' });
   }
 
-  const { image } = req.body;
+  const { image, token } = req.body;
   if (!image) {
     return res.status(400).json({ error: 'Missing image data' });
+  }
+
+  const appPassword = process.env.APP_PASSWORD || 'hakka2026';
+  if (token !== appPassword) {
+    return res.status(401).json({ error: '未授權' });
   }
 
   try {
@@ -22,7 +27,7 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6-20250610',
+        model: 'claude-sonnet-4-20250514',
         max_tokens: 3000,
         messages: [{
           role: 'user',
