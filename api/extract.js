@@ -44,8 +44,8 @@ RULES:
 1. Identify each DISTINCT business card. If front and back are both visible, merge into ONE contact.
 2. If a card lists multiple people, create one entry per person.
 3. Extract ALL phone numbers. If multiple, join with "\\n".
-4. email field: ONLY real email addresses (contains @). Do NOT put LINE IDs, URLs, or social media handles in email.
-5. line field: LINE ID or LINE URL (line.me/...). Look for LINE logo or "LINE:" text.
+4. email field: ONLY real email addresses (must match user@domain.com pattern). LINE IDs starting with @ (like @yang123) are NOT emails — put them in the line field. Never put LINE IDs, URLs, or social media handles in email.
+5. line field: LINE ID (often starts with @) or LINE URL (line.me/...). Look for LINE logo or "LINE:" text. A handle starting with @ near a LINE logo is a LINE ID, not an email.
 6. facebook field: Facebook URL or profile name. Check QR codes — if a QR code points to facebook.com or fb.com, put that URL here.
 7. instagram field: Instagram handle or URL. Check QR codes — if a QR code points to instagram.com, put that URL here.
 8. qrcode field: URLs from QR codes that are NOT Facebook, Instagram, or LINE. Leave empty if all QR codes are already categorized above.
@@ -53,6 +53,7 @@ RULES:
 10. If a headshot/portrait photo exists, also return faceX, faceY, faceSize.
 11. For any OTHER contact info (LinkedIn, Twitter/X, WeChat, website, fax, etc.), put in "extras" array as {label, value}. Do NOT duplicate info already in core fields.
 12. Do NOT repeat the same information in multiple fields. Each piece of info goes in exactly ONE field.
+13. Slogans, mottos, and taglines (e.g. "一路走來 在地打拼") go ONLY in the note field once. Do NOT put them in titles, org, business, or any other field.
 
 Return JSON array. Each object: name, chineseName, titles, org, phone, email, line, facebook, instagram, address, business, qrcode, note, extras, cardX, cardY, cardW, cardH (+ faceX, faceY, faceSize if portrait exists). Empty string for missing text fields. extras is an array (empty [] if none).
 Return ONLY valid JSON. No markdown.`,
