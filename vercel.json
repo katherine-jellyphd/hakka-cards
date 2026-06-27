@@ -2,6 +2,11 @@
   "buildCommand": "",
   "outputDirectory": "public",
   "framework": null,
+  "functions": {
+    "api/extract.js": {
+      "maxDuration": 30
+    }
+  },
   "headers": [
     {
       "source": "/",
