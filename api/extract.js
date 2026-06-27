@@ -44,8 +44,9 @@ export default async function handler(req, res) {
 3. If front and back are both visible, merge into ONE contact.
 4. If a card lists multiple people, create one entry per person.
 5. If there are QR codes on the card, read the URL they encode.
-6. If a person's headshot/portrait photo is visible on the card, estimate the face center position as percentage of the FULL IMAGE (not the individual card). Return as faceX (0-100, from left) and faceY (0-100, from top) and faceSize (approximate face width as percentage of image width, typically 3-15).
-For each person return: name, chineseName, titles, org, phone, email, address, business, qrcode, note, faceX, faceY, faceSize. Use empty string for text fields if not found. Omit faceX/faceY/faceSize if no portrait photo exists on that card.
+6. For each card, estimate its bounding box in the FULL IMAGE as percentages (0-100): cardX (left edge), cardY (top edge), cardW (width), cardH (height). This is critical for cropping individual card thumbnails.
+7. If a person's headshot/portrait photo is visible on the card, also return faceX, faceY (face center as % of full image) and faceSize (face width as % of image width).
+For each person return: name, chineseName, titles, org, phone, email, address, business, qrcode, note, cardX, cardY, cardW, cardH. Also include faceX, faceY, faceSize only if a portrait photo exists. Use empty string for text fields if not found.
 Return ONLY a valid JSON array. No markdown.`,
             },
           ],
