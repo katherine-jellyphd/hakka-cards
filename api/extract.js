@@ -47,8 +47,9 @@ export default async function handler(req, res) {
 6. For each card, estimate its bounding box in the FULL IMAGE as percentages (0-100): cardX (left edge), cardY (top edge), cardW (width), cardH (height). This is critical for cropping individual card thumbnails.
 7. If a person's headshot/portrait photo is visible on the card, also return faceX, faceY (face center as % of full image) and faceSize (face width as % of image width).
 8. Extract ALL phone numbers found on the card. If multiple, join with newline.
-9. For any additional contact info beyond the core fields (LINE ID, Facebook, Instagram, LinkedIn, Twitter/X, WeChat, website, fax, etc.), return them in an "extras" array of {label, value} objects. Use descriptive Chinese labels like "LINE", "Facebook", "傳真" etc.
-For each person return: name, chineseName, titles, org, phone, email, address, business, qrcode, note, extras, cardX, cardY, cardW, cardH. Also include faceX, faceY, faceSize only if a portrait photo exists. Use empty string for text fields if not found. extras should be an array (empty array if none).
+9. Extract LINE ID if present — look for LINE logo, "LINE:" text, or LINE QR code URL (line.me/...). Put in the "line" field.
+10. For any additional contact info beyond the core fields (Facebook, Instagram, LinkedIn, Twitter/X, WeChat, website, fax, etc.), return them in an "extras" array of {label, value} objects. Do NOT put LINE in extras.
+For each person return: name, chineseName, titles, org, phone, email, line, address, business, qrcode, note, extras, cardX, cardY, cardW, cardH. Also include faceX, faceY, faceSize only if a portrait photo exists. Use empty string for text fields if not found. extras should be an array (empty array if none).
 Return ONLY a valid JSON array. No markdown.`,
             },
           ],
